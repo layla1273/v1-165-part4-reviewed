@@ -1,5 +1,5 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse,FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from langserve import add_routes
 from starlette.staticfiles import StaticFiles
@@ -26,6 +26,7 @@ async def redirect_root_to_docs():
     return RedirectResponse("/docs")
 
 pdf_directory = "./pdf-documents"
+os.makedirs(pdf_directory, exist_ok=True)
 
 @app.post("/upload")
 async def upload_files(files: list[UploadFile] = File(...)):
